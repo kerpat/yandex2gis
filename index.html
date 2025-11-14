@@ -404,6 +404,100 @@
             text-shadow: 0 0 8px #ff00ff;
         }
 
+        /* Стили для кнопок копирования */
+        .copy-btn {
+            cursor: pointer;
+            color: #00ff00;
+            text-decoration: none;
+            margin-left: 10px;
+            font-size: 0.85em;
+            padding: 4px 12px;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-shadow: 0 0 5px #00ff00;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn:hover {
+            color: #fff;
+            background: #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+            text-shadow: none;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.2em;
+                letter-spacing: 4px;
+            }
+
+            .subtitle {
+                font-size: 0.8em;
+                margin-bottom: 30px;
+            }
+
+            .tabs {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .tab {
+                padding: 15px;
+                font-size: 1.1em;
+            }
+
+            .accounts-list {
+                padding: 15px;
+            }
+
+            .account-item {
+                padding: 15px;
+                transform: translateX(0) !important; /* Отключаем ховер-эффект на мобильных */
+            }
+            
+            .account-item:hover {
+                 transform: none;
+                 box-shadow: none;
+            }
+
+            .account-info {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+            
+            .account-label {
+                min-width: unset;
+                margin-bottom: 2px;
+                font-size: 0.9em;
+            }
+            
+            .account-value {
+                font-size: 1em;
+                word-break: break-all;
+            }
+
+            .account-actions {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .show-password, .copy-btn {
+                margin-left: 0;
+                padding: 6px 14px;
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -546,18 +640,24 @@
                     <div class="account-info">
                         <span class="account-label">ПОЧТА/ЛОГИН:</span>
                         <span class="account-value">${escapeHTML(acc.email)}</span>
+                        <div class="account-actions">
+                            <span class="copy-btn" onclick="copyToClipboard('${escapeHTML(acc.email)}', this)">копировать</span>
+                        </div>
                     </div>
                     <div class="account-info">
                         <span class="account-label">ПАРОЛЬ:</span>
                         <span class="account-value password-hidden" id="pwd-${containerId}-${idx}">••••••••</span>
-                        <span class="show-password" onclick="togglePassword(this, '${escapeHTML(acc.password)}')">показать</span>
+                        <div class="account-actions">
+                            <span class="show-password" onclick="togglePassword(this, '${escapeHTML(acc.password)}')">показать</span>
+                            <span class="copy-btn" onclick="copyToClipboard('${escapeHTML(acc.password)}', this)">копировать</span>
+                        </div>
                     </div>
                 </div>
             `).join('');
         }
 
         function togglePassword(button, password) {
-            const pwdElement = button.previousElementSibling;
+            const pwdElement = button.parentElement.previousElementSibling;
             if (pwdElement.textContent === '••••••••') {
                 pwdElement.textContent = password;
                 button.textContent = 'скрыть';
@@ -565,6 +665,19 @@
                 pwdElement.textContent = '••••••••';
                 button.textContent = 'показать';
             }
+        }
+
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'СКОПИРОВАНО!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 1500);
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+                alert('Не удалось скопировать текст');
+            });
         }
 
         function init() {
