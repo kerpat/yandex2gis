@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌆 V A P O R A C C O U N T S 🌆</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', 'Courier New', monospace;
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+            background: #0a0a1f;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Анимированный градиентный фон */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                #0a0a1f 0%, 
+                #1a0a2e 20%, 
+                #2d1b4e 40%,
+                #16213e 60%,
+                #0f0f23 80%,
+                #0a0a1f 100%
+            );
+            z-index: -3;
+        }
+
+        /* Анимированная сетка */
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(255, 0, 255, 0.15) 25%, rgba(255, 0, 255, 0.15) 26%, transparent 27%, transparent 74%, rgba(255, 0, 255, 0.15) 75%, rgba(255, 0, 255, 0.15) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 255, 255, 0.15) 25%, rgba(0, 255, 255, 0.15) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.15) 75%, rgba(0, 255, 255, 0.15) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: bottom;
+            animation: gridMove 20s linear infinite;
+            z-index: -2;
+            opacity: 0.6;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 50px; }
+        }
+
+        /* Звезды на фоне */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Главный заголовок */
+        h1 {
+            text-align: center;
+            font-size: 3.5em;
+            font-weight: 900;
+            margin-bottom: 5px;
+            letter-spacing: 8px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: textShine 3s linear infinite, float 3s ease-in-out infinite;
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 20px #ff00ff) drop-shadow(0 0 40px #00ffff);
+            position: relative;
+        }
+
+        h1::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            top: 0;
+            color: #ff00ff;
+            opacity: 0.8;
+            z-index: -1;
+            animation: glitch1 0.3s infinite;
+        }
+
+        @keyframes textShine {
+            to { background-position: 200% center; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glitch1 {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 50px;
+            color: #00ffff;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        .tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab:hover::before {
+            left: 100%;
+        }
+
+        .tab:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.5), 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            box-shadow: 
+                0 0 20px rgba(255, 0, 255, 0.8),
+                0 0 40px rgba(0, 255, 255, 0.6),
+                inset 0 0 20px rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* Счетчики */
+        .counter {
+            margin-left: 10px;
+            padding: 3px 10px;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            font-size: 0.8em;
+            border-radius: 999px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+            background: rgba(0, 255, 255, 0.08);
+        }
+        .list-counter {
+            margin-left: 10px;
+            padding: 2px 8px;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            font-size: 0.7em;
+            border-radius: 999px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            background: rgba(0, 255, 255, 0.08);
+            vertical-align: middle;
+        }
+
+        /* Бейдж номера аккаунта */
+        .account-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border: 1px solid #ff00ff;
+            color: #fff;
+            font-weight: 800;
+            letter-spacing: 1px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(255,0,255,0.4), rgba(0,255,255,0.2));
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.6), 0 0 15px rgba(0, 255, 255, 0.3);
+            text-shadow: 0 0 4px rgba(0,0,0,0.5);
+        }
+
+        .content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .accounts-list {
+            background: linear-gradient(135deg, rgba(10, 10, 31, 0.9), rgba(22, 33, 62, 0.9));
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #00ffff, #ff00ff, #00ffff) 1;
+            padding: 35px;
+            box-shadow: 
+                0 8px 32px rgba(0, 255, 255, 0.3),
+                0 0 60px rgba(255, 0, 255, 0.2),
+                inset 0 0 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accounts-list::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            animation: scanline 3s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .accounts-list h2 {
+            margin-bottom: 25px;
+            color: #00ffff;
+            font-size: 1.6em;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 2px 2px 0px rgba(0, 0, 0, 0.7);
+            position: relative;
+            z-index: 1;
+        }
+
+        .account-item {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(26, 10, 46, 0.6));
+            border: 2px solid #ff00ff;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .account-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .account-item:hover::before {
+            left: 100%;
+        }
+
+        .account-item:hover {
+            border-color: #00ffff;
+            box-shadow: 
+                0 0 25px rgba(0, 255, 255, 0.6),
+                0 0 50px rgba(255, 0, 255, 0.3),
+                inset 0 0 20px rgba(0, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .account-info {
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .account-label {
+            color: #ff00ff;
+            font-weight: 700;
+            display: inline-block;
+            min-width: 180px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #ff00ff;
+            font-size: 0.95em;
+        }
+
+        .account-value {
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+            font-weight: 600;
+        }
+
+        .show-password {
+            cursor: pointer;
+            color: #00ff00;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 0.85em;
+            padding: 4px 12px;
+            border: 1px solid #00ff00;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-shadow: 0 0 5px #00ff00;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .show-password:hover {
+            color: #fff;
+            background: #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.6);
+            text-shadow: none;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: rgba(0, 255, 255, 0.5);
+            font-style: italic;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+        }
+        
+        .login-instruction {
+            background: rgba(255, 0, 255, 0.1);
+            border: 1px solid #ff00ff;
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #ff00ff;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px #ff00ff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="container">
+        <h1 data-text="ACCOUNTS">A C C O U N T S</h1>
+        <p class="subtitle">━━━ RETROWAVE STORAGE SYSTEM ━━━</p>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(event, 'yandex')">ЯНДЕКС <span class="counter" id="tab-count-yandex">50/50</span></div>
+            <div class="tab" onclick="switchTab(event, '2gis')">2ГИС <span class="counter" id="tab-count-2gis">50/50</span></div>
+        </div>
+
+        <!-- Яндекс -->
+        <div id="yandex-content" class="content active">
+            <div class="accounts-list">
+                <h2>📋 МОИ АККАУНТЫ ЯНДЕКС <span class="list-counter" id="list-count-yandex">50/50</span></h2>
+                <div class="login-instruction">
+                    Вход строго через гугл аккаунт с хорошим VPN
+                </div>
+                <div id="yandex-accounts"></div>
+            </div>
+        </div>
+
+        <!-- 2ГИС -->
+        <div id="2gis-content" class="content">
+            <div class="accounts-list">
+                <h2>📋 МОИ АККАУНТЫ 2ГИС <span class="list-counter" id="list-count-2gis">50/50</span></h2>
+                 <div class="login-instruction">
+                    Вход строго через гугл аккаунт с хорошим VPN
+                </div>
+                <div id="2gis-accounts"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Генерация звезд
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
+
+        // Безопасный вывод в HTML атрибуты/текст
+        function escapeHTML(str) {
+            if (str === undefined || str === null) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // Переключение табов
+        function switchTab(event, tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            document.getElementById(tab + '-content').classList.add('active');
+        }
+        
+        const accounts = [
+            { email: 'daleyzaangela01650@s2fa.sbs', password: 'AKA999aka', name: 'АНЖЕЛИКА ПЕТРОВНА' },
+            { email: 'scarlettkailani86649@s2fa.sbs', password: 'AKA999aka', name: 'Денчик' },
+            { email: 'malialucille18038@s2fa.sbs', password: 'AKA999aka', name: 'ВАНО' },
+            { email: 'jamieraven28119@s2fa.sbs', password: 'AKA999aka', name: 'ЕГОР НИКОЛАЕВ' },
+            { email: 'hadleighmonica62507@s2fa.sbs', password: 'AKA999aka', name: 'АРТЕМ ВОЛКОВ' },
+            { email: 'raynalegacy47539@s2fa.sbs', password: 'AKA999aka', name: 'АЛЕКСАНДР ИВАНОВ' },
+            { email: 'harmonibridget20203@s2fa.sbs', password: 'AKA999aka', name: 'АНАСТАСИЯ МОРОЗОВА' },
+            { email: 'maxinesophia30519@s2fa.sbs', password: 'AKA999aka', name: 'ЛИЗА ЗАЙЦЕВА' },
+            { email: 'sariyahscout21286@s2fa.sbs', password: 'AKA999aka', name: 'ОЛЕГ ЕРМАКОВ' },
+            { email: 'kylacalliope08434@s2fa.sbs', password: 'AKA999aka', name: 'ДЕНИС ТРОФИМОВ' },
+            { email: 'helenakiera70989@s2fa.sbs', password: 'AKA999aka', name: 'СЕРГЕЙ МИХАЙЛОВ' },
+            { email: 'journeemckenzie22981@s2fa.sbs', password: 'AKA999aka', name: 'ДИМТРИЙ ЕВГЕНЬЕВ' },
+            { email: 'sorayaisabela15409@s2fa.sbs', password: 'AKA999aka', name: 'ВЛАДИСЛАВ ТИТОВ' },
+            { email: 'fionagianna04033@s2fa.sbs', password: 'AKA999aka', name: 'ВЕРОНИКА ТАРАСОВА' },
+            { email: 'ryleighparker20259@s2fa.sbs', password: 'AKA999aka', name: 'ПАВЕЛ КОМАРОВ' },
+            { email: 'lolaskyla30550@s2fa.sbs', password: 'AKA999aka', name: 'ВАЛЕРИЯ ГРИШИНА' },
+            { email: 'brinleymartha45013@s2fa.sbs', password: 'AKA999aka', name: 'ИЛЬЯ ЯКОВЛЕВ' },
+            { email: 'azaleaanne67583@s2fa.sbs', password: 'AKA999aka', name: 'ВИКТОРИЯ ЗАЙЦЕВА' },
+            { email: 'maggieeleanor73597@s2fa.sbs', password: 'AKA999aka', name: 'СТЕПАН СОБОЛЕВ' },
+            { email: 'larasamara22267@s2fa.sbs', password: 'AKA999aka', name: 'ИРИНА РУДНЕВА' },
+            { email: 'hadassahmaeve81022@s2fa.sbs', password: 'AKA999aka', name: 'МАРИЯ ПЕТРОВА' },
+            { email: 'jessicaquinn62683@s2fa.sbs', password: 'AKA999aka', name: 'ДМИТРИЙ СИДОРОВ' },
+            { email: 'marcelinemarie51423@s2fa.sbs', password: 'AKA999aka', name: 'СЕМЕН НИКОЛАЕВ' },
+            { email: 'dannamagnolia71547@s2fa.sbs', password: 'AKA999aka', name: 'ИГОРЬ ВАЛЕРЬЕВИЧ' },
+            { email: 'estellacelia55467@s2fa.sbs', password: 'AKA999aka', name: 'МАРИЯ ЛУЖНИКОВА' },
+            { email: 'esthereloise19324@s2fa.sbs', password: 'AKA999aka', name: 'КИРИЛЛ ПАТРУШЕВ' },
+            { email: 'zoyabrylee56824@s2fa.sbs', password: 'AKA999aka', name: 'Даниил Максимов' },
+            { email: 'antonellakataleya96077@s2fa.sbs', password: 'AKA999aka', name: 'Валерия Ким' },
+            { email: 'celineryan27542@s2fa.sbs', password: 'AKA999aka', name: 'Николай Тереньтев' },
+            { email: 'taliaada64191@s2fa.sbs', password: 'AKA999aka', name: 'Всеволод Солнцев' },
+            { email: 'lorelaiflorence37723@s2fa.sbs', password: 'AKA999aka', name: 'Елена Пономарева' },
+            { email: 'margotbrynn67526@s2fa.sbs', password: 'AKA999aka', name: 'Катя Петрова' },
+            { email: 'jayleenalessia40684@s2fa.sbs', password: 'AKA999aka', name: 'Максим Белоусов' },
+            { email: 'kimberlilyana21412@s2fa.sbs', password: 'AKA999aka', name: 'Тимофей Старцев' },
+            { email: 'everlymiracle77146@s2fa.sbs', password: 'AKA999aka', name: 'Игорь Быков' },
+            { email: 'penelopebexley47654@s2fa.sbs', password: 'AKA999aka', name: 'Киря Сафронов' },
+            { email: 'scarlettejordyn93087@s2fa.sbs', password: 'AKA999aka', name: 'Макс Крутой' },
+            { email: 'annabelleeverleigh84760@s2fa.sbs', password: 'AKA999aka', name: 'Аня Мискова' },
+            { email: 'haileyhanna74717@s2fa.sbs', password: 'AKA999aka', name: 'Георгий Анатольевич' },
+            { email: 'isabellemadison22050@s2fa.sbs', password: 'AKA999aka', name: 'Катя Самбука' },
+            { email: 'karsyncassandra13299@s2fa.sbs', password: 'AKA999aka', name: 'Игорь Летов' },
+            { email: 'kendallalianna01800@s2fa.sbs', password: 'AKA999aka', name: 'Эдуард Чен' },
+            { email: 'ilarobin42223@s2fa.sbs', password: 'AKA999aka', name: 'Денис Рахмангулов' },
+            { email: 'wrenlauren48421@s2fa.sbs', password: 'AKA999aka', name: 'Егор Паршаков' },
+            { email: 'leannaemersyn86377@s2fa.sbs', password: 'AKA999aka', name: 'Артем Проскуряков' },
+            { email: 'michaelamoura20064@s2fa.sbs', password: 'AKA999aka', name: 'Денис Дегтярев' },
+            { email: 'azalealila43001@s2fa.sbs', password: 'AKA999aka', name: 'Катя Лазукова' },
+            { email: 'kieraamelie36621@s2fa.sbs', password: 'AKA999aka', name: 'Эрика Матей' },
+            { email: 'blakelycarly11272@s2fa.sbs', password: 'AKA999aka', name: 'Илья Сережкин' },
+            { email: 'leightonalaina36810@s2fa.sbs', password: 'AKA999aka', name: 'Матвей Петрушкин' },
+        ];
+
+        function renderAccounts(containerId, accounts) {
+            const container = document.getElementById(containerId);
+            if (accounts.length === 0) {
+                container.innerHTML = '<div class="empty-state">Нет сохраненных аккаунтов</div>';
+                return;
+            }
+            
+            container.innerHTML = accounts.map((acc, idx) => `
+                <div class="account-item">
+                    <div class="account-badge">#${idx + 1}</div>
+                    ${acc.name ? `
+                    <div class="account-info">
+                        <span class="account-label">ИМЯ ФАМИЛИЯ:</span>
+                        <span class="account-value">${escapeHTML(acc.name)}</span>
+                    </div>` : ''}
+                    <div class="account-info">
+                        <span class="account-label">ПОЧТА/ЛОГИН:</span>
+                        <span class="account-value">${escapeHTML(acc.email)}</span>
+                    </div>
+                    <div class="account-info">
+                        <span class="account-label">ПАРОЛЬ:</span>
+                        <span class="account-value password-hidden" id="pwd-${containerId}-${idx}">••••••••</span>
+                        <span class="show-password" onclick="togglePassword(this, '${escapeHTML(acc.password)}')">показать</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function togglePassword(button, password) {
+            const pwdElement = button.previousElementSibling;
+            if (pwdElement.textContent === '••••••••') {
+                pwdElement.textContent = password;
+                button.textContent = 'скрыть';
+            } else {
+                pwdElement.textContent = '••••••••';
+                button.textContent = 'показать';
+            }
+        }
+
+        function init() {
+            renderAccounts('yandex-accounts', accounts);
+            renderAccounts('2gis-accounts', accounts);
+        }
+
+        init();
+    </script>
+</body>
+</html>

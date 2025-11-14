@@ -1,0 +1,18 @@
+{
+  "yandexAccounts": [
+    {
+      "id": 1234567890,
+      "email": "example@yandex.ru",
+      "password": "password123",
+      "emailPassword": "emailpass123"
+    }
+  ],
+  "2gisAccounts": [
+    {
+      "id": 1234567891,
+      "login": "+79991234567",
+      "password": "password456"
+    }
+  ],
+  "exportDate": "2025-11-13T05:49:00.000Z"
+}
